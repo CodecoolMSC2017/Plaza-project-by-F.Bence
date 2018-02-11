@@ -72,7 +72,6 @@ public class ShopImpl implements Shop {
             }
             throw new ProductAlreadyExistsException("Product already exist");
         }
-        throw new ShopIsClosedException("Shop is closed");
 
     }
 
@@ -88,7 +87,6 @@ public class ShopImpl implements Shop {
             }
             throw new NoSuchProductException("No such product in the shop");
         }
-        throw new ShopIsClosedException("Shop is closed");
     }
 
     public Product buyProduct(long barcode) throws NoSuchProductException, ShopIsClosedException {
