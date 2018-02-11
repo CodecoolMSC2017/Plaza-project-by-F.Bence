@@ -2,36 +2,76 @@ package com.codecool.plaza.api;
 
 import java.util.List;
 
-public class PlazaImpl implements  Plaza{
+public class PlazaImpl implements Plaza {
     private List<Shop> shops;
+    private String owner;
+    private boolean open;
 
-    public void Plaza(){
+    public PlazaImpl(String owner) {
+        this.owner = owner;
+        open = false;
     }
 
     public List<Shop> getShops() throws PlazaIsClosedException {
-        return null;
+        if (isOpen()) {
+            return shops;
+        }
+        throw new PlazaIsClosedException("Plaza is closed");
     }
 
     public void addShop(Shop shop) throws ShopAlreadyExistsException, PlazaIsClosedException {
+        if (isOpen()) {
+            if (!hasShop(shop)) {
+                shops.add(shop);
+            }
+            throw new ShopAlreadyExistsException("Shop name already exists");
 
+        }
+        throw new PlazaIsClosedException("Plaza is closed");
     }
 
     public void removeShop(Shop shop) throws NoSuchShopException, PlazaIsClosedException {
+        if (isOpen()) {
+            if (hasShop(shop)) {
+                shops.remove(shop);
+            }
+            throw new NoSuchShopException("No such shop in the Plaza");
 
+        }
+        throw new PlazaIsClosedException("Plaza is closed");
     }
 
     public Shop findShopByName(String name) throws NoSuchShopException, PlazaIsClosedException {
-        return null;
+        if (isOpen()) {
+            for (Shop tmpshop : shops) {
+                if (tmpshop.getName().equals(name)) {
+                    return tmpshop;
+
+                }
+            }
+            throw new NoSuchShopException("No such shop in the Plaza");
+        }
+        throw new PlazaIsClosedException("Plaza is closed");
     }
 
-    public boolean isOpen() {
+    public boolean hasShop(Shop shop) {
+        for (Shop tmpshop : shops) {
+            if (tmpshop.getName().equals(shop.getName())) {
+                return true;
+            }
+        }
         return false;
     }
 
+    public boolean isOpen() {
+        return open;
+    }
+
     public void open() {
+        open = true;
     }
 
     public void close() {
-
+        open = false;
     }
 }
