@@ -5,9 +5,11 @@ import java.util.List;
 public class PlazaImpl implements Plaza {
     private List<Shop> shops;
     private String owner;
+    private String name;
     private boolean open;
 
-    public PlazaImpl(String owner) {
+    public PlazaImpl(String owner,String name) {
+        this.name = name;
         this.owner = owner;
         open = false;
     }
@@ -73,5 +75,13 @@ public class PlazaImpl implements Plaza {
 
     public void close() {
         open = false;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public String getName() {
+        return name;
     }
 }
