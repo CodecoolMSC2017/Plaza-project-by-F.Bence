@@ -4,8 +4,10 @@ public abstract class Product {
 
     protected long barcode;
     protected String manufacturer;
+    protected String name;
 
-    protected Product(long barcode, String manufacturer) {
+    protected Product(long barcode, String manufacturer, String name) {
+        this.name = name;
         this.barcode = barcode;
         this.manufacturer = manufacturer;
     }
@@ -16,6 +18,10 @@ public abstract class Product {
 
     public String getManufacturer() {
         return manufacturer;
+    }
+
+    public String getName(){
+        return name;
     }
 
     public String toString() {
