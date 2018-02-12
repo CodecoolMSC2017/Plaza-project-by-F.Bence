@@ -2,7 +2,7 @@ package com.codecool.plaza.api;
 
 import java.util.List;
 
-public interface Plaza {
+interface Plaza {
 
     List<Shop> getShops() throws PlazaIsClosedException;
 

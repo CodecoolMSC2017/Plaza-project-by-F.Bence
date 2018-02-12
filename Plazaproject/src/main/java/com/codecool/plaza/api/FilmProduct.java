@@ -1,8 +1,8 @@
 package com.codecool.plaza.api;
 
 public class FilmProduct extends Product {
-    private int playTime;
-    private String genre;
+    private final int playTime;
+    private final String genre;
 
     public FilmProduct(long barcode, String manufacturer, String name, int playTime, String genre) {
         super(barcode, manufacturer, name);
@@ -11,11 +11,11 @@ public class FilmProduct extends Product {
         this.genre = genre;
     }
 
-    public String getGenre() {
+    private String getGenre() {
         return genre;
     }
 
-    public int getPlayTime() {
+    private int getPlayTime() {
         return playTime;
     }
 

@@ -2,11 +2,11 @@ package com.codecool.plaza.api;
 
 public abstract class Product {
 
-    protected long barcode;
-    protected String manufacturer;
-    protected String name;
+    private final long barcode;
+    private final String manufacturer;
+    String name;
 
-    protected Product(long barcode, String manufacturer, String name) {
+    Product(long barcode, String manufacturer, String name) {
         this.name = name;
         this.barcode = barcode;
         this.manufacturer = manufacturer;
@@ -16,7 +16,7 @@ public abstract class Product {
         return barcode;
     }
 
-    public String getManufacturer() {
+    private String getManufacturer() {
         return manufacturer;
     }
 

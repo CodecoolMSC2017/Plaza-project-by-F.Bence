@@ -1,26 +1,27 @@
 package com.codecool.plaza.api;
 
 public class MobileProduct extends Product {
-    private float size;
-    private int ram;
-    private int rom;
+    private final float size;
+    private final int ram;
+    private final int rom;
 
     public MobileProduct(long barcode, String manufacturer, String name, float size, int ram, int rom) {
         super(barcode, manufacturer, name);
         this.size = size;
         this.rom = rom;
+        this.ram = ram;
     }
 
 
-    public float getSize() {
+    private float getSize() {
         return size;
     }
 
-    public int getRam() {
+    private int getRam() {
         return ram;
     }
 
-    public int getRom() {
+    private int getRom() {
         return rom;
     }
 

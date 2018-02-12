@@ -1,8 +1,8 @@
 package com.codecool.plaza.api;
 
 public class BookProduct extends Product{
-    private String author;
-    private int numberOfPages;
+    private final String author;
+    private final int numberOfPages;
 
     public BookProduct(long barcode,String manufacturer,String name, String author, int numberOfPages) {
         super(barcode,manufacturer,name);
@@ -11,11 +11,11 @@ public class BookProduct extends Product{
         this.numberOfPages = numberOfPages;
     }
 
-    public String getAuthor() {
+    private String getAuthor() {
         return author;
     }
 
-    public int getNumberOfPages() {
+    private int getNumberOfPages() {
         return numberOfPages;
     }
     public String toString(){

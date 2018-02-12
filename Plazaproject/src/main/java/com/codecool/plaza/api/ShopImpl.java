@@ -4,10 +4,10 @@ import java.util.*;
 
 public class ShopImpl implements Shop {
 
-    private String name;
-    private String owner;
+    private final String name;
+    private final String owner;
     private boolean open;
-    private Map<Long, ShopEntry> products;
+    private final Map<Long, ShopEntry> products;
 
     public ShopImpl(String name, String owner) {
         this.name = name;
@@ -148,7 +148,7 @@ public class ShopImpl implements Shop {
     }
 
     public class ShopEntry {
-        private Product product;
+        private final Product product;
         private int quantity;
         private float price;
 
@@ -159,31 +159,31 @@ public class ShopImpl implements Shop {
             this.price = price;
         }
 
-        public Product getProduct() {
+        Product getProduct() {
             return product;
         }
 
-        public int getQuantity() {
+        int getQuantity() {
             return quantity;
         }
 
-        public void setQuantity(int quantity) {
+        void setQuantity(int quantity) {
             this.quantity = quantity;
         }
 
-        public void increaseQuantity(int amount) {
+        void increaseQuantity(int amount) {
             setQuantity(quantity + amount);
         }
 
-        public void decreaseQuantity(int amount) {
+        void decreaseQuantity(int amount) {
             setQuantity(quantity - amount);
         }
 
-        public float getPrice() {
+        float getPrice() {
             return price;
         }
 
-        public void setPrice(float price) {
+        void setPrice(float price) {
             this.price = price;
         }
 

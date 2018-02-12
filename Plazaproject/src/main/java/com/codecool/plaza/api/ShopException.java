@@ -1,8 +1,8 @@
 package com.codecool.plaza.api;
 
-public class ShopException extends Exception {
+class ShopException extends Exception {
 
-    public ShopException(String message) {
+    ShopException(String message) {
         super(message);
     }
 }

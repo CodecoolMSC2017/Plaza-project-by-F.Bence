@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlazaImpl implements Plaza {
-    private List<Shop> shops;
-    private String owner;
-    private String name;
+    private final List<Shop> shops;
+    private final String owner;
+    private final String name;
     private boolean open;
 
     public PlazaImpl(String owner, String name) {
@@ -60,7 +60,7 @@ public class PlazaImpl implements Plaza {
         throw new PlazaIsClosedException("Plaza is closed");
     }
 
-    public boolean hasShop(Shop shop) {
+    private boolean hasShop(Shop shop) {
         for (Shop tmpshop : shops) {
             if (tmpshop.getName().equals(shop.getName())) {
                 return true;

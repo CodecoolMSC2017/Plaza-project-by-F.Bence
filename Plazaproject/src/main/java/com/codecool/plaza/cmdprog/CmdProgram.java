@@ -7,13 +7,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-public class CmdProgram {
-    private List<Product> cart;
-    Scanner reader = new Scanner(System.in);
-    PlazaImpl myPlaza;
-    float moneySpent = 0;
+class CmdProgram {
+    private final List<Product> cart;
+    private final Scanner reader = new Scanner(System.in);
+    private float moneySpent = 0;
 
-    public CmdProgram(String[] args) {
+    public CmdProgram() {
         cart = new ArrayList<Product>();
     }
 
@@ -22,6 +21,7 @@ public class CmdProgram {
         boolean sub;
         System.out.println("Enter your name:");
         owner = reader.nextLine();
+        PlazaImpl myPlaza;
         while (true) {
             System.out.println("There are no plaza created yet! Press\n 1) to create a new plaza.\n 2) to exit.");
             String choose = reader.nextLine();
@@ -144,7 +144,7 @@ public class CmdProgram {
 
                                         System.out.println("Please enter the barcode of the product");
                                         String barcodeString = reader.nextLine();
-                                        long barcode = 1;
+                                        long barcode;
                                         try {
                                             barcode = Long.parseLong(barcodeString);
                                         } catch (NumberFormatException ex) {
@@ -154,7 +154,7 @@ public class CmdProgram {
 
                                         System.out.println("Please enter the quantity of the product");
                                         String quantityString = reader.nextLine();
-                                        int quantity = 1;
+                                        int quantity;
                                         try {
                                             quantity = Integer.parseInt(quantityString);
                                         } catch (NumberFormatException ex) {
@@ -181,9 +181,9 @@ public class CmdProgram {
 
                                                 System.out.println("Please enter the number of pages of the book");
                                                 String pagesString = reader.nextLine();
-                                                int pages = 1;
+                                                int pages;
                                                 try {
-                                                    pages = Integer.parseInt(quantityString);
+                                                    pages = Integer.parseInt(pagesString);
                                                 } catch (NumberFormatException ex) {
                                                     System.out.println("Wrong input entered! Enter a number!");
                                                     break;
@@ -195,7 +195,7 @@ public class CmdProgram {
 
                                                 System.out.println("Please enter the playtime of the film!");
                                                 String playTimeString = reader.nextLine();
-                                                int playTime = 1;
+                                                int playTime;
                                                 try {
                                                     playTime = Integer.parseInt(playTimeString);
                                                 } catch (NumberFormatException ex) {
@@ -207,7 +207,7 @@ public class CmdProgram {
                                             } else if (type.equals("Mobile")) {
                                                 System.out.println("Please enter the size of the mobile!");
                                                 String sizeString = reader.nextLine();
-                                                float size = 1;
+                                                float size;
                                                 try {
                                                     size = Float.parseFloat(sizeString);
                                                 } catch (NumberFormatException ex) {
@@ -216,7 +216,7 @@ public class CmdProgram {
                                                 }
                                                 System.out.println("Please enter the number of RAM of the mobile!");
                                                 String ramString = reader.nextLine();
-                                                int ram = 1;
+                                                int ram;
                                                 try {
                                                     ram = Integer.parseInt(ramString);
                                                 } catch (NumberFormatException ex) {
@@ -225,7 +225,7 @@ public class CmdProgram {
                                                 }
                                                 System.out.println("Please enter the number of ROM of the mobile!");
                                                 String romString = reader.nextLine();
-                                                int rom = 1;
+                                                int rom;
                                                 try {
                                                     rom = Integer.parseInt(romString);
                                                 } catch (NumberFormatException ex) {
@@ -246,7 +246,7 @@ public class CmdProgram {
                                     case 7:
                                         System.out.println("Please enter the barcode of the product");
                                         String barcodeStr = reader.nextLine();
-                                        long code = 1;
+                                        long code;
                                         try {
                                             code = Long.parseLong(barcodeStr);
                                         } catch (NumberFormatException ex) {
@@ -256,7 +256,7 @@ public class CmdProgram {
 
                                         System.out.println("Please enter the quantity of the product");
                                         String addString = reader.nextLine();
-                                        int add = 1;
+                                        int add;
                                         try {
                                             add = Integer.parseInt(addString);
                                         } catch (NumberFormatException ex) {
@@ -273,7 +273,7 @@ public class CmdProgram {
                                     case 8:
                                         System.out.println("Please enter the barcode of the product");
                                         String setStr = reader.nextLine();
-                                        long set = 1;
+                                        long set;
                                         try {
                                             set = Long.parseLong(setStr);
                                         } catch (NumberFormatException ex) {
@@ -282,7 +282,7 @@ public class CmdProgram {
                                         }
                                         System.out.println("Please enter the price of the product");
                                         String newPriceStr = reader.nextLine();
-                                        float newPrice = 1;
+                                        float newPrice;
                                         try {
                                             newPrice = Float.parseFloat(newPriceStr);
                                         } catch (NumberFormatException ex) {
@@ -294,7 +294,7 @@ public class CmdProgram {
                                     case 9:
                                         System.out.println("Please enter the barcode of the product");
                                         String buyStr = reader.nextLine();
-                                        long buy = 1;
+                                        long buy;
                                         try {
                                             buy = Long.parseLong(buyStr);
                                         } catch (NumberFormatException ex) {
