@@ -289,7 +289,7 @@ public class CmdProgram {
                                             System.out.println("Wrong input entered! Enter a number!");
                                             break;
                                         }
-                                        myShop.setPrice(set,newPrice);
+                                        myShop.setPrice(set, newPrice);
                                         break;
                                     case 9:
                                         System.out.println("Please enter the barcode of the product");
@@ -304,7 +304,7 @@ public class CmdProgram {
                                         try {
                                             try {
                                                 cart.add(myShop.buyProduct(buy));
-                                                moneySpent +=myShop.getPrice(buy);
+                                                moneySpent += myShop.getPrice(buy);
                                             } catch (OutOfStockException ex) {
                                                 System.out.println(ex.getMessage());
                                                 break;
@@ -343,12 +343,12 @@ public class CmdProgram {
                         }
                         break;
                     case 8:
-                        for (Product product : cart){
+                        for (Product product : cart) {
                             System.out.println(product);
                         }
                         break;
                     case 9:
-                        System.out.println("Total money spent: "+moneySpent);
+                        System.out.println("Total money spent: " + moneySpent);
                         break;
                     case 10:
                         System.out.println("Bye!");
