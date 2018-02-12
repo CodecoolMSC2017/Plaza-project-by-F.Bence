@@ -1,8 +1,6 @@
 package com.codecool.plaza.api;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class ShopImpl implements Shop {
 
@@ -26,6 +24,10 @@ public class ShopImpl implements Shop {
         return owner;
     }
 
+    public Map<Long, ShopEntry> getProducts() {
+        return products;
+    }
+
     public boolean isOpen() {
         return open;
     }
@@ -38,13 +40,19 @@ public class ShopImpl implements Shop {
         open = false;
     }
 
-    public Product findByName(String name) throws ShopIsClosedException {
+    public Product findByName(String name) throws ShopIsClosedException, NoSuchProductException {
+        Product product = null;
         if (isOpen()) {
             for (Map.Entry<Long, ShopEntry> entry : products.entrySet()) {
                 ShopEntry tempShopEntry = entry.getValue();
                 if (tempShopEntry.getProduct().getName().equals(name)) {
-                    return tempShopEntry.getProduct();
+                    product = tempShopEntry.getProduct();
                 }
+            }
+            if (product == null) {
+                throw new NoSuchProductException("No such product in the shop!");
+            } else {
+                return product;
             }
         }
         throw new ShopIsClosedException("Shop is closed");
@@ -65,12 +73,11 @@ public class ShopImpl implements Shop {
 
     public void addNewProduct(Product product, int quantity, float price) throws ProductAlreadyExistsException, ShopIsClosedException {
         if (isOpen()) {
-            Random rand = new Random();
-            long barcode = (long) (rand.nextInt((999999999 - 100000000) + 1) + 100000000);
-            if (!hasProduct(barcode)) {
-                products.put(barcode, new ShopEntry(product, quantity, price));
+            if (!hasProduct(product.getBarcode())) {
+                products.put(product.getBarcode(), new ShopEntry(product, quantity, price));
+            } else {
+                throw new ProductAlreadyExistsException("Product already exist");
             }
-            throw new ProductAlreadyExistsException("Product already exist");
         }
 
     }
@@ -84,19 +91,23 @@ public class ShopImpl implements Shop {
                     }
                 }
 
+            } else {
+                throw new NoSuchProductException("No such product in the shop");
             }
-            throw new NoSuchProductException("No such product in the shop");
         }
     }
 
-    public Product buyProduct(long barcode) throws NoSuchProductException, ShopIsClosedException {
+    public Product buyProduct(long barcode) throws NoSuchProductException, ShopIsClosedException, OutOfStockException {
         if (isOpen()) {
             if (hasProduct(barcode)) {
                 for (Map.Entry<Long, ShopEntry> entry : products.entrySet()) {
                     if (barcode == entry.getKey()) {
-                        entry.getValue().decreaseQuantity(1);
-                        return entry.getValue().getProduct();
-
+                        if (entry.getValue().getQuantity() > 0) {
+                            entry.getValue().decreaseQuantity(1);
+                            return entry.getValue().getProduct();
+                        } else {
+                            throw new OutOfStockException("The product is out of stock!");
+                        }
                     }
                 }
             }
@@ -105,7 +116,38 @@ public class ShopImpl implements Shop {
         throw new ShopIsClosedException("Shop is closed");
     }
 
-    class ShopEntry {
+    public void setPrice(long barcode, float price) throws ShopIsClosedException {
+        if (isOpen()) {
+            if (hasProduct(barcode)) {
+                for (Map.Entry<Long, ShopEntry> entry : products.entrySet()) {
+                    if (barcode == entry.getKey()) {
+                        entry.getValue().setPrice(price);
+                    }
+                }
+            }
+        }
+        throw new ShopIsClosedException("Shop is closed");
+    }
+
+    public float getPrice(long barcode) throws ShopIsClosedException {
+        if (isOpen()) {
+            if (hasProduct(barcode)) {
+                for (Map.Entry<Long, ShopEntry> entry : products.entrySet()) {
+                    if (barcode == entry.getKey()) {
+                        return entry.getValue().getPrice();
+                    }
+                }
+            }
+        }
+        throw new ShopIsClosedException("Shop is closed");
+    }
+
+
+    public String toString() {
+        return "name: " + getName() + " owner: " + getOwner() + " open: " + isOpen();
+    }
+
+    public class ShopEntry {
         private Product product;
         private int quantity;
         private float price;
@@ -119,10 +161,6 @@ public class ShopImpl implements Shop {
 
         public Product getProduct() {
             return product;
-        }
-
-        public void setProduct(Product product) {
-            this.product = product;
         }
 
         public int getQuantity() {
@@ -145,12 +183,12 @@ public class ShopImpl implements Shop {
             return price;
         }
 
-        public void setPrice(int price) {
+        public void setPrice(float price) {
             this.price = price;
         }
 
         public String toString() {
-            return getProduct() + "quantity: " + getQuantity() + "price: " + getPrice();
+            return "products: " + getProduct() + " quantity: " + getQuantity() + " price: " + getPrice();
         }
     }
 }
