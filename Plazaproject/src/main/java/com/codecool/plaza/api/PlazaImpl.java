@@ -1,5 +1,6 @@
 package com.codecool.plaza.api;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PlazaImpl implements Plaza {
@@ -8,7 +9,8 @@ public class PlazaImpl implements Plaza {
     private String name;
     private boolean open;
 
-    public PlazaImpl(String owner,String name) {
+    public PlazaImpl(String owner, String name) {
+        shops = new ArrayList<Shop>();
         this.name = name;
         this.owner = owner;
         open = false;
@@ -25,22 +27,24 @@ public class PlazaImpl implements Plaza {
         if (isOpen()) {
             if (!hasShop(shop)) {
                 shops.add(shop);
+            } else {
+                throw new ShopAlreadyExistsException("Shop name already exists");
             }
-            throw new ShopAlreadyExistsException("Shop name already exists");
-
+        } else {
+            throw new PlazaIsClosedException("Plaza is closed");
         }
-        throw new PlazaIsClosedException("Plaza is closed");
     }
 
     public void removeShop(Shop shop) throws NoSuchShopException, PlazaIsClosedException {
         if (isOpen()) {
             if (hasShop(shop)) {
                 shops.remove(shop);
+            } else {
+                throw new NoSuchShopException("No such shop in the Plaza");
             }
-            throw new NoSuchShopException("No such shop in the Plaza");
-
+        } else {
+            throw new PlazaIsClosedException("Plaza is closed");
         }
-        throw new PlazaIsClosedException("Plaza is closed");
     }
 
     public Shop findShopByName(String name) throws NoSuchShopException, PlazaIsClosedException {
@@ -83,5 +87,9 @@ public class PlazaImpl implements Plaza {
 
     public String getName() {
         return name;
+    }
+
+    public String toString() {
+        return "Welcome to the " + getName() + "!";
     }
 }
