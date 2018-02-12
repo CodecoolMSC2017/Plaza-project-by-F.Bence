@@ -19,6 +19,6 @@ public class BookProduct extends Product{
         return numberOfPages;
     }
     public String toString(){
-        return "name: "+getName() + "author: "+ getAuthor() + "number of pages: "+ getNumberOfPages();
+        return "barcode: " + getBarcode() +" name: "+getName() + " author: "+ getAuthor() + " number of pages: "+ getNumberOfPages();
     }
 }

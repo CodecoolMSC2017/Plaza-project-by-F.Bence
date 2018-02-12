@@ -20,11 +20,11 @@ public abstract class Product {
         return manufacturer;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
     public String toString() {
-        return "barcode: " + barcode + "\tmanufacturer: " + manufacturer;
+        return "barcode: " + getManufacturer() + " name: " + getName() + " manufacturer: " + getManufacturer();
     }
 }

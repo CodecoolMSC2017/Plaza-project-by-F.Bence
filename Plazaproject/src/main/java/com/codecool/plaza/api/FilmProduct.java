@@ -1,11 +1,11 @@
 package com.codecool.plaza.api;
 
-public class FilmProduct extends Product{
+public class FilmProduct extends Product {
     private int playTime;
     private String genre;
 
-    public FilmProduct(long barcode,String manufacturer,String name, int playTime, String genre) {
-        super(barcode,manufacturer,name);
+    public FilmProduct(long barcode, String manufacturer, String name, int playTime, String genre) {
+        super(barcode, manufacturer, name);
         this.name = name;
         this.playTime = playTime;
         this.genre = genre;
@@ -18,7 +18,8 @@ public class FilmProduct extends Product{
     public int getPlayTime() {
         return playTime;
     }
-    public String toString(){
-        return "name: "+getName() + "genre: "+ getGenre() + "play time: "+ getPlayTime();
+
+    public String toString() {
+        return "barcode: " + getBarcode() + " name: " + getName() + " genre: " + getGenre() + " play time: " + getPlayTime();
     }
 }
