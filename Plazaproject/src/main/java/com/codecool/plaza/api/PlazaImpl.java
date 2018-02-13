@@ -10,7 +10,7 @@ public class PlazaImpl implements Plaza {
     private boolean open;
 
     public PlazaImpl(String owner, String name) {
-        shops = new ArrayList<Shop>();
+        shops = new ArrayList<>();
         this.name = name;
         this.owner = owner;
         open = false;

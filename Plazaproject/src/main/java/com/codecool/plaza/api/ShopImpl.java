@@ -13,7 +13,7 @@ public class ShopImpl implements Shop {
         this.name = name;
         this.owner = owner;
         open = false;
-        products = new HashMap<Long, ShopEntry>();
+        products = new HashMap<>();
     }
 
     public String getName() {

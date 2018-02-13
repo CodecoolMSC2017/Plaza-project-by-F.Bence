@@ -13,7 +13,7 @@ class CmdProgram {
     private float moneySpent = 0;
 
     public CmdProgram() {
-        cart = new ArrayList<Product>();
+        cart = new ArrayList<>();
     }
 
     public void run() {
@@ -22,19 +22,22 @@ class CmdProgram {
         System.out.println("Enter your name:");
         owner = reader.nextLine();
         PlazaImpl myPlaza;
+        label1:
         while (true) {
             System.out.println("There are no plaza created yet! Press\n 1) to create a new plaza.\n 2) to exit.");
             String choose = reader.nextLine();
-            if (choose.equals("1")) {
-                System.out.println("Enter the name of your plaza:");
-                String plazaName = reader.nextLine();
-                myPlaza = new PlazaImpl(owner, plazaName);
-                break;
-            } else if (choose.equals("2")) {
-                System.out.println("Bye!");
-                System.exit(0);
-            } else {
-                System.out.println("Wrong input entered");
+            switch (choose) {
+                case "1":
+                    System.out.println("Enter the name of your plaza:");
+                    String plazaName = reader.nextLine();
+                    myPlaza = new PlazaImpl(owner, plazaName);
+                    break label1;
+                case "2":
+                    System.out.println("Bye!");
+                    System.exit(0);
+                default:
+                    System.out.println("Wrong input entered");
+                    break;
             }
 
         }
@@ -108,6 +111,7 @@ class CmdProgram {
                                 System.out.println("Wrong input entered! Enter a number!");
                             }
                             try {
+                                label:
                                 switch (submenu) {
                                     case 1:
                                         for (Map.Entry<Long, ShopImpl.ShopEntry> entry : myShop.getProducts().entrySet()) {
@@ -175,67 +179,71 @@ class CmdProgram {
                                         System.out.println("Please enter the type of the product! (Book,Film,Mobile)");
                                         String type = reader.nextLine();
                                         try {
-                                            if (type.equals("Book")) {
-                                                System.out.println("Please enter the author of the book!");
-                                                String author = reader.nextLine();
+                                            switch (type) {
+                                                case "Book":
+                                                    System.out.println("Please enter the author of the book!");
+                                                    String author = reader.nextLine();
 
-                                                System.out.println("Please enter the number of pages of the book");
-                                                String pagesString = reader.nextLine();
-                                                int pages;
-                                                try {
-                                                    pages = Integer.parseInt(pagesString);
-                                                } catch (NumberFormatException ex) {
-                                                    System.out.println("Wrong input entered! Enter a number!");
+                                                    System.out.println("Please enter the number of pages of the book");
+                                                    String pagesString = reader.nextLine();
+                                                    int pages;
+                                                    try {
+                                                        pages = Integer.parseInt(pagesString);
+                                                    } catch (NumberFormatException ex) {
+                                                        System.out.println("Wrong input entered! Enter a number!");
+                                                        break;
+                                                    }
+                                                    myShop.addNewProduct(new BookProduct(barcode, manufacturer, name, author, pages), quantity, price);
                                                     break;
-                                                }
-                                                myShop.addNewProduct(new BookProduct(barcode, manufacturer, name, author, pages), quantity, price);
-                                            } else if (type.equals("Film")) {
-                                                System.out.println("Please enter the genre of the film!");
-                                                String genre = reader.nextLine();
+                                                case "Film":
+                                                    System.out.println("Please enter the genre of the film!");
+                                                    String genre = reader.nextLine();
 
-                                                System.out.println("Please enter the playtime of the film!");
-                                                String playTimeString = reader.nextLine();
-                                                int playTime;
-                                                try {
-                                                    playTime = Integer.parseInt(playTimeString);
-                                                } catch (NumberFormatException ex) {
-                                                    System.out.println("Wrong input entered! Enter a number!");
-                                                    break;
-                                                }
-                                                myShop.addNewProduct(new FilmProduct(barcode, manufacturer, name, playTime, genre), quantity, price);
+                                                    System.out.println("Please enter the playtime of the film!");
+                                                    String playTimeString = reader.nextLine();
+                                                    int playTime;
+                                                    try {
+                                                        playTime = Integer.parseInt(playTimeString);
+                                                    } catch (NumberFormatException ex) {
+                                                        System.out.println("Wrong input entered! Enter a number!");
+                                                        break;
+                                                    }
+                                                    myShop.addNewProduct(new FilmProduct(barcode, manufacturer, name, playTime, genre), quantity, price);
 
-                                            } else if (type.equals("Mobile")) {
-                                                System.out.println("Please enter the size of the mobile!");
-                                                String sizeString = reader.nextLine();
-                                                float size;
-                                                try {
-                                                    size = Float.parseFloat(sizeString);
-                                                } catch (NumberFormatException ex) {
-                                                    System.out.println("Wrong input entered! Enter a number!");
                                                     break;
-                                                }
-                                                System.out.println("Please enter the number of RAM of the mobile!");
-                                                String ramString = reader.nextLine();
-                                                int ram;
-                                                try {
-                                                    ram = Integer.parseInt(ramString);
-                                                } catch (NumberFormatException ex) {
-                                                    System.out.println("Wrong input entered! Enter a number!");
+                                                case "Mobile":
+                                                    System.out.println("Please enter the size of the mobile!");
+                                                    String sizeString = reader.nextLine();
+                                                    float size;
+                                                    try {
+                                                        size = Float.parseFloat(sizeString);
+                                                    } catch (NumberFormatException ex) {
+                                                        System.out.println("Wrong input entered! Enter a number!");
+                                                        break;
+                                                    }
+                                                    System.out.println("Please enter the number of RAM of the mobile!");
+                                                    String ramString = reader.nextLine();
+                                                    int ram;
+                                                    try {
+                                                        ram = Integer.parseInt(ramString);
+                                                    } catch (NumberFormatException ex) {
+                                                        System.out.println("Wrong input entered! Enter a number!");
+                                                        break;
+                                                    }
+                                                    System.out.println("Please enter the number of ROM of the mobile!");
+                                                    String romString = reader.nextLine();
+                                                    int rom;
+                                                    try {
+                                                        rom = Integer.parseInt(romString);
+                                                    } catch (NumberFormatException ex) {
+                                                        System.out.println("Wrong input entered! Enter a number!");
+                                                        break;
+                                                    }
+                                                    myShop.addNewProduct(new MobileProduct(barcode, manufacturer, name, size, ram, rom), quantity, price);
                                                     break;
-                                                }
-                                                System.out.println("Please enter the number of ROM of the mobile!");
-                                                String romString = reader.nextLine();
-                                                int rom;
-                                                try {
-                                                    rom = Integer.parseInt(romString);
-                                                } catch (NumberFormatException ex) {
-                                                    System.out.println("Wrong input entered! Enter a number!");
-                                                    break;
-                                                }
-                                                myShop.addNewProduct(new MobileProduct(barcode, manufacturer, name, size, ram, rom), quantity, price);
-                                            } else {
-                                                System.out.println("Wrong input entered! Enter a product from the given list!");
-                                                break;
+                                                default:
+                                                    System.out.println("Wrong input entered! Enter a product from the given list!");
+                                                    break label;
                                             }
 
 
