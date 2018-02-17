@@ -159,7 +159,7 @@ public class ShopImpl implements Shop {
             this.price = price;
         }
 
-        Product getProduct() {
+        public Product getProduct() {
             return product;
         }
 

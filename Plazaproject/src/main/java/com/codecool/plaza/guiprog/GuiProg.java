@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class GuiProg {
+class GuiProg {
     private float moneySpent = 0;
     private final List<Product> cart;
 
@@ -17,59 +17,77 @@ public class GuiProg {
         cart = new ArrayList<>();
     }
 
-    String title = "Plaza Project by F.Bence";
-    Frames myFrame = new Frames();
-    ShopImpl myShop;
-    String name;
-    JFrame start;
-    JFrame menu;
-    JFrame shopMenu;
-    JFrame shopName;
-    JFrame remove;
-    JFrame enterShop;
-    JFrame find;
-    JFrame adding;
-    JFrame priceSet;
-    JFrame buyProduct;
-    JButton next;
-    JButton nextNewShop;
-    JButton removeShop;
-    JButton nextToShop;
-    JButton findProduct;
-    JButton addProduct;
-    JButton changePrice;
-    JButton buying;
-    JTextField nameOfUser;
-    JTextField nameOfPlaza;
-    JTextField nameOfShop;
-    JTextField quantityField;
-    JTextField barcodeField;
-    JTextField priceField;
-    PlazaImpl myPlaza;
+    private final String title = "Plaza Project by F.Bence";
+    private final Frames myFrame = new Frames();
+    private ShopImpl myShop;
+    private String name;
+    private JFrame start;
+    private JFrame menu;
+    private JFrame shopMenu;
+    private JFrame shopName;
+    private JFrame remove;
+    private JFrame enterShop;
+    private JFrame find;
+    private JFrame adding;
+    private JFrame priceSet;
+    private JFrame buyProduct;
+    private JFrame addingNew;
+    private JFrame bookProd;
+    private JFrame filmProd;
+    private JFrame mobileProd;
+    private JButton next;
+    private JButton nextNewShop;
+    private JButton removeShop;
+    private JButton nextToShop;
+    private JButton findProduct;
+    private JButton addProduct;
+    private JButton changePrice;
+    private JButton buying;
+    private JButton addNewProduct;
+    private JButton addBook;
+    private JButton addFilm;
+    private JButton addMobile;
+    private JTextField nameOfUser;
+    private JTextField nameOfPlaza;
+    private JTextField nameOfShop;
+    private JTextField nameField;
+    private JTextField manufacturerField;
+    private JTextField quantityField;
+    private JTextField barcodeField;
+    private JTextField priceField;
+    private JTextField typeField;
+    private JTextField authorField;
+    private JTextField pagesField;
+    private JTextField genreField;
+    private JTextField playTimeField;
+    private JTextField sizeField;
+    private JTextField ramField;
+    private JTextField romField;
+    private PlazaImpl myPlaza;
     // Menu button and message
-    JButton one;
-    JButton two;
-    JButton three;
-    JButton four;
-    JButton five;
-    JButton six;
-    JButton seven;
-    JButton eight;
-    JButton nine;
-    JButton ten;
-    JLabel message;
+    private JButton one;
+    private JButton two;
+    private JButton three;
+    private JButton four;
+    private JButton five;
+    private JButton six;
+    private JButton seven;
+    private JButton eight;
+    private JButton nine;
+    private JButton ten;
+    private JLabel message;
     //Shop menu button and message
-    JButton shopOne;
-    JButton shopTwo;
-    JButton shopThree;
-    JButton shopFour;
-    JButton shopFive;
-    JButton shopSix;
-    JButton shopSeven;
-    JButton shopEight;
-    JButton shopNine;
-    JButton shopTen;
-    JLabel shopMessage;
+    private JButton shopOne;
+    private JButton shopTwo;
+    private JButton shopThree;
+    private JButton shopFour;
+    private JButton shopFive;
+    private JButton shopSix;
+    private JButton shopSeven;
+    private JButton shopEight;
+    private JButton shopNine;
+    private JButton shopTen;
+    private JLabel shopMessage;
 
 
     void Start() {
@@ -103,6 +121,222 @@ public class GuiProg {
         start.add(nameOfPlaza);
         start.add(next);
         start.setVisible(true);
+    }
+
+    private String handleBuying() {
+        String str;
+        try {
+            try {
+                try {
+                    try {
+                        cart.add(myShop.buyProduct(Long.parseLong(barcodeField.getText())));
+                        moneySpent += myShop.getPrice(Long.parseLong(barcodeField.getText()));
+                        str = "The product added to your cart!";
+                    } catch (ShopIsClosedException ex) {
+                        str = ex.getMessage();
+                    }
+                } catch (NumberFormatException ex) {
+                    str = "Wrong input entered!";
+                }
+            } catch (OutOfStockException ex) {
+                str = ex.getMessage();
+            }
+        } catch (NoSuchProductException ex) {
+            str = ex.getMessage();
+        }
+        return str;
+    }
+
+    private String handlePricing() {
+        String str;
+        try {
+            try {
+                myShop.setPrice(Long.parseLong(barcodeField.getText()), Float.parseFloat(priceField.getText()));
+                str = "The new price of the product is: " + priceField.getText();
+            } catch (ShopIsClosedException ex) {
+                str = ex.getMessage();
+            }
+        } catch (NumberFormatException ex) {
+            str = "Wrong input entered!";
+        }
+
+        return str;
+    }
+
+    private void handleAddNew() {
+        if (typeField.getText().equals("Book")) {
+            addingNew.setVisible(false);
+            myFrame.BookProd();
+        } else if (typeField.getText().equals("Film")) {
+            addingNew.setVisible(false);
+            myFrame.FilmProd();
+        } else if (typeField.getText().equals("Mobile")) {
+            addingNew.setVisible(false);
+            myFrame.MobileProd();
+        } else {
+            shopMessage.setText("Wrong input entered!");
+        }
+    }
+
+    private String handleBookAdd() {
+        String str;
+        try {
+            try {
+                try {
+                    myShop.addNewProduct(new BookProduct(Long.parseLong(barcodeField.getText()), manufacturerField.getText(), nameField.getText(), authorField.getText(), Integer.parseInt(pagesField.getText())), Integer.parseInt(quantityField.getText()), Float.parseFloat(priceField.getText()));
+                    str = nameField.getText() + " added the shop!";
+                } catch (ShopIsClosedException ex) {
+                    str = ex.getMessage();
+                }
+            } catch (ProductAlreadyExistsException ex) {
+                str = ex.getMessage();
+            }
+        } catch (NumberFormatException ex) {
+            str = "Wrong input entered!";
+        }
+
+        return str;
+    }
+
+    private String handleFilmAdd() {
+        String str;
+        try {
+            try {
+                try {
+                    myShop.addNewProduct(new FilmProduct(Long.parseLong(barcodeField.getText()), manufacturerField.getText(), nameField.getText(), Integer.parseInt(playTimeField.getText()), genreField.getText()), Integer.parseInt(quantityField.getText()), Float.parseFloat(priceField.getText()));
+                    str = nameField.getText() + " added the shop!";
+                } catch (ShopIsClosedException ex) {
+                    str = ex.getMessage();
+                }
+            } catch (ProductAlreadyExistsException ex) {
+                str = ex.getMessage();
+            }
+        } catch (NumberFormatException ex) {
+            str = "Wrong input entered!";
+        }
+
+        return str;
+    }
+
+    private String handleMobileAdd() {
+        String str;
+        try {
+            try {
+                try {
+                    myShop.addNewProduct(new MobileProduct(Long.parseLong(barcodeField.getText()), manufacturerField.getText(), nameField.getText(), Float.parseFloat(sizeField.getText()), Integer.parseInt(ramField.getText()), Integer.parseInt(romField.getText())), Integer.parseInt(quantityField.getText()), Float.parseFloat(priceField.getText()));
+                    str = nameField.getText() + " added the shop!";
+                } catch (ShopIsClosedException ex) {
+                    str = ex.getMessage();
+                }
+            } catch (ProductAlreadyExistsException ex) {
+                str = ex.getMessage();
+            }
+        } catch (NumberFormatException ex) {
+            str = "Wrong input entered!";
+        }
+
+        return str;
+    }
+
+    private String handleAdding() {
+        String str;
+        try {
+            try {
+                try {
+                    myShop.addProduct(Long.parseLong(barcodeField.getText()), Integer.parseInt(quantityField.getText()));
+                    str = quantityField.getText() + " product added to the shop.";
+                } catch (ShopIsClosedException ex) {
+                    str = ex.getMessage();
+                }
+            } catch (NoSuchProductException ex) {
+                str = ex.getMessage();
+            }
+        } catch (NumberFormatException ex) {
+            str = "Wrong input entered!";
+        }
+
+        return str;
+    }
+
+    private String handleProductListing() {
+        StringBuilder str = new StringBuilder();
+        if (myShop.getProducts().size() == 0) {
+            str = new StringBuilder("No product created yet.");
+        }
+        for (Map.Entry<Long, ShopImpl.ShopEntry> entry : myShop.getProducts().entrySet()) {
+            str.append("name: ").append(entry.getValue().getProduct().getName()).append(" barcode: ").append(entry.getValue().getProduct().getBarcode()).append(" , ");
+        }
+        return str.toString();
+    }
+
+    private String handleFind() {
+        String str;
+        try {
+            try {
+                str = myShop.findByName(nameOfShop.getText()).toString();
+            } catch (ShopIsClosedException ex) {
+                str = ex.getMessage();
+            }
+        } catch (NoSuchProductException ex) {
+            str = ex.getMessage();
+        }
+
+        return str;
+    }
+
+    private String handleCartListing() {
+        StringBuilder str = new StringBuilder();
+        for (Product product : cart) {
+            str.append(product.toString()).append("  ");
+        }
+        if (cart.size() == 0) {
+            str = new StringBuilder("The cart is empty");
+        }
+        return str.toString();
+    }
+
+    private String handleListing() {
+        StringBuilder str = new StringBuilder();
+        try {
+            if (myPlaza.getShops().size() == 0) {
+                str = new StringBuilder("No shop created yet.");
+            }
+            for (Shop shop : myPlaza.getShops()) {
+                str.append(shop.getName()).append("  ");
+            }
+        } catch (PlazaIsClosedException ex) {
+            str = new StringBuilder(ex.getMessage());
+        }
+        return str.toString();
+    }
+
+    private String handleCreatingShop() {
+        String str;
+        try {
+            myPlaza.addShop(new ShopImpl(nameOfShop.getText(), name));
+            str = nameOfShop.getText() + " added to the " + myPlaza.getName();
+        } catch (PlazaIsClosedException ex) {
+            str = ex.getMessage();
+
+        } catch (ShopAlreadyExistsException ex) {
+            str = ex.getMessage();
+        }
+        return str;
+    }
+
+    private String handleRemoveShop() {
+        String str;
+        try {
+            try {
+                myPlaza.removeShop(myPlaza.findShopByName(nameOfShop.getText()));
+                str = nameOfShop.getText() + " removed from the " + myPlaza.getName();
+            } catch (PlazaIsClosedException ex) {
+                str = ex.getMessage();
+            }
+        } catch (NoSuchShopException ex) {
+            str = ex.getMessage();
+        }
+        return str;
     }
 
     class Next_Click implements ActionListener {
@@ -186,6 +420,22 @@ public class GuiProg {
                 myShop.close();
                 shopMessage.setText("The shop is closed!");
             } else if (e.getSource() == shopSix) {
+                shopMenu.setVisible(false);
+                myFrame.addNew();
+            } else if (e.getSource() == addNewProduct) {
+                handleAddNew();
+            } else if (e.getSource() == addBook) {
+                shopMessage.setText(handleBookAdd());
+                bookProd.setVisible(false);
+                shopMenu.setVisible(true);
+            } else if (e.getSource() == addFilm) {
+                shopMessage.setText(handleFilmAdd());
+                filmProd.setVisible(false);
+                shopMenu.setVisible(true);
+            } else if (e.getSource() == addMobile) {
+                shopMessage.setText(handleMobileAdd());
+                mobileProd.setVisible(false);
+                shopMenu.setVisible(true);
             } else if (e.getSource() == shopSeven) {
                 shopMenu.setVisible(false);
                 myFrame.addProduct();
@@ -219,148 +469,7 @@ public class GuiProg {
         }
     }
 
-    String handleBuying() {
-        String str;
-        try {
-            try {
-                try {
-                    try {
-                        myShop.buyProduct(Long.parseLong(barcodeField.getText()));
-                        str = "The product added to your cart!";
-                    } catch (ShopIsClosedException ex) {
-                        str = ex.getMessage();
-                    }
-                } catch (NumberFormatException ex) {
-                    str = "Wrong input entered!";
-                }
-            } catch (OutOfStockException ex) {
-                str = ex.getMessage();
-            }
-        } catch (NoSuchProductException ex) {
-            str = ex.getMessage();
-        }
-        return str;
-    }
-
-    String handlePricing() {
-        String str;
-        try {
-            try {
-                myShop.setPrice(Long.parseLong(barcodeField.getText()), Float.parseFloat(priceField.getText()));
-                str = "The new price of the product is: " + priceField.getText();
-            } catch (ShopIsClosedException ex) {
-                str = ex.getMessage();
-            }
-        } catch (NumberFormatException ex) {
-            str = "Wrong input entered!";
-        }
-
-        return str;
-    }
-
-    String handleAdding() {
-        String str;
-        try {
-            try {
-                try {
-                    myShop.addProduct(Long.parseLong(barcodeField.getText()), Integer.parseInt(quantityField.getText()));
-                    str = quantityField.getText() + " product added to the shop.";
-                } catch (ShopIsClosedException ex) {
-                    str = ex.getMessage();
-                }
-            } catch (NoSuchProductException ex) {
-                str = ex.getMessage();
-            }
-        } catch (NumberFormatException ex) {
-            str = "Wrong input entered!";
-        }
-
-        return str;
-    }
-
-    String handleProductListing() {
-        StringBuilder str = new StringBuilder();
-        if (myShop.getProducts().size() == 0) {
-            str = new StringBuilder("No product created yet.");
-        }
-        for (Map.Entry<Long, ShopImpl.ShopEntry> entry : myShop.getProducts().entrySet()) {
-            str.append(entry.getValue().toString()).append("\n");
-        }
-        return str.toString();
-    }
-
-    String handleFind() {
-        String str;
-        try {
-            try {
-                str = myShop.findByName(nameOfShop.getText()).toString();
-            } catch (ShopIsClosedException ex) {
-                str = ex.getMessage();
-            }
-        } catch (NoSuchProductException ex) {
-            str = ex.getMessage();
-        }
-
-        return str;
-    }
-
-    String handleCartListing() {
-        String str = "";
-        for (Product product : cart) {
-            str += product.toString() + "  ";
-        }
-        if (cart.size() == 0) {
-            str = "The cart is empty";
-        }
-        return str;
-    }
-
-    String handleListing() {
-        String str = "";
-        try {
-            if (myPlaza.getShops().size() == 0) {
-                str = "No shop created yet.";
-            }
-            for (Shop shop : myPlaza.getShops()) {
-                str += shop.getName() + "  ";
-            }
-        } catch (PlazaIsClosedException ex) {
-            str = ex.getMessage();
-        }
-        return str;
-    }
-
-    String handleCreatingShop() {
-        String str;
-        try {
-            myPlaza.addShop(new ShopImpl(nameOfShop.getText(), name));
-            str = nameOfShop.getText() + " added to the " + myPlaza.getName();
-        } catch (PlazaIsClosedException ex) {
-            str = ex.getMessage();
-
-        } catch (ShopAlreadyExistsException ex) {
-            str = ex.getMessage();
-        }
-        return str;
-    }
-
-    String handleRemoveShop() {
-        String str;
-        try {
-            try {
-                myPlaza.removeShop(myPlaza.findShopByName(nameOfShop.getText()));
-                str = nameOfShop.getText() + " removed from the " + myPlaza.getName();
-            } catch (PlazaIsClosedException ex) {
-                str = ex.getMessage();
-            }
-        } catch (NoSuchShopException ex) {
-            str = ex.getMessage();
-        }
-        return str;
-    }
-
-
-    public class Frames {
+    class Frames {
         void menu() {
 
             menu = new JFrame();
@@ -517,7 +626,7 @@ public class GuiProg {
             nineth.setBounds(100, 395, 200, 25);
             shopTen.setBounds(25, 435, 60, 25);
             tenth.setBounds(100, 435, 200, 25);
-            shopMessage.setBounds(25, 475, 300, 100);
+            shopMessage.setBounds(25, 475, 475, 100);
             shopMenu.setLayout(null);
 
             shopMenu.add(Welcome);
@@ -635,7 +744,7 @@ public class GuiProg {
             adding.setSize(500, 500);
             adding.setTitle(title);
             adding.setLocationRelativeTo(null);
-            JLabel barcode = new JLabel("Please the barcode of the product!");
+            JLabel barcode = new JLabel("Please enter the barcode of the product!");
             JLabel quantity = new JLabel("Please enter the quantity");
             barcodeField = new JTextField();
             quantityField = new JTextField();
@@ -709,6 +818,162 @@ public class GuiProg {
             buyProduct.add(barcodeField);
             buyProduct.add(buying);
             buyProduct.setVisible(true);
+        }
+
+        void addNew() {
+            addingNew = new JFrame();
+            addingNew.setSize(600, 600);
+            addingNew.setTitle(title);
+            addingNew.setLocationRelativeTo(null);
+            JLabel name = new JLabel("Please enter the name of the product!");
+            JLabel manufacturer = new JLabel("Please enter the manufacturer!");
+            JLabel barcode = new JLabel("Please enter the barcode!");
+            JLabel quantity = new JLabel("Please enter the quantity!");
+            JLabel price = new JLabel("Please enter the price!");
+            JLabel type = new JLabel("Please enter the type (Film,Book,Mobile)!");
+            nameField = new JTextField();
+            manufacturerField = new JTextField();
+            barcodeField = new JTextField();
+            quantityField = new JTextField();
+            priceField = new JTextField();
+            typeField = new JTextField();
+            addNewProduct = new JButton("Add product!");
+
+            addNewProduct.addActionListener(new Next_Click());
+            nameField.setColumns(7);
+            manufacturerField.setColumns(7);
+            barcodeField.setColumns(7);
+            quantityField.setColumns(7);
+            priceField.setColumns(7);
+            typeField.setColumns(7);
+
+            name.setBounds(150, 50, 300, 30);
+            nameField.setBounds(150, 75, 300, 20);
+            manufacturer.setBounds(150, 125, 300, 30);
+            manufacturerField.setBounds(150, 150, 300, 20);
+            barcode.setBounds(150, 200, 300, 30);
+            barcodeField.setBounds(150, 225, 300, 20);
+            quantity.setBounds(150, 275, 300, 30);
+            quantityField.setBounds(150, 300, 300, 20);
+            price.setBounds(150, 350, 300, 30);
+            priceField.setBounds(150, 375, 300, 20);
+            type.setBounds(150, 425, 300, 30);
+            typeField.setBounds(150, 450, 300, 20);
+            addNewProduct.setBounds(175, 500, 225, 30);
+            addingNew.setLayout(null);
+
+            addingNew.add(name);
+            addingNew.add(nameField);
+            addingNew.add(manufacturer);
+            addingNew.add(manufacturerField);
+            addingNew.add(barcode);
+            addingNew.add(barcodeField);
+            addingNew.add(quantity);
+            addingNew.add(quantityField);
+            addingNew.add(price);
+            addingNew.add(priceField);
+            addingNew.add(type);
+            addingNew.add(typeField);
+            addingNew.add(addNewProduct);
+            addingNew.setVisible(true);
+
+        }
+
+        void MobileProd() {
+            mobileProd = new JFrame();
+            mobileProd.setSize(500, 500);
+            mobileProd.setTitle(title);
+            mobileProd.setLocationRelativeTo(null);
+            JLabel size = new JLabel("Please enter the size!");
+            JLabel ram = new JLabel("Please enter the RAM!");
+            JLabel rom = new JLabel("Please enter the ROM!");
+            sizeField = new JTextField();
+            ramField = new JTextField();
+            romField = new JTextField();
+            addMobile = new JButton("Add mobile!");
+
+            addMobile.addActionListener(new Next_Click());
+            sizeField.setColumns(7);
+            romField.setColumns(7);
+            ramField.setColumns(7);
+
+            size.setBounds(150, 50, 200, 30);
+            sizeField.setBounds(150, 100, 200, 20);
+            ram.setBounds(150, 175, 200, 30);
+            ramField.setBounds(150, 225, 200, 20);
+            rom.setBounds(150, 300, 200, 30);
+            romField.setBounds(150, 350, 200, 20);
+            addMobile.setBounds(175, 400, 150, 30);
+            mobileProd.setLayout(null);
+
+            mobileProd.add(size);
+            mobileProd.add(sizeField);
+            mobileProd.add(ram);
+            mobileProd.add(ramField);
+            mobileProd.add(rom);
+            mobileProd.add(romField);
+            mobileProd.add(addMobile);
+            mobileProd.setVisible(true);
+        }
+
+        void BookProd() {
+            bookProd = new JFrame();
+            bookProd.setSize(500, 500);
+            bookProd.setTitle(title);
+            bookProd.setLocationRelativeTo(null);
+            JLabel author = new JLabel("Please enter the author!");
+            JLabel pages = new JLabel("Please enter the number of pages!");
+            authorField = new JTextField();
+            pagesField = new JTextField();
+            addBook = new JButton("Add book!");
+
+            addBook.addActionListener(new Next_Click());
+            authorField.setColumns(7);
+            pagesField.setColumns(7);
+
+            author.setBounds(150, 125, 200, 30);
+            authorField.setBounds(150, 175, 200, 20);
+            pages.setBounds(150, 250, 200, 30);
+            pagesField.setBounds(150, 300, 200, 20);
+            addBook.setBounds(175, 400, 150, 30);
+            bookProd.setLayout(null);
+
+            bookProd.add(author);
+            bookProd.add(authorField);
+            bookProd.add(pages);
+            bookProd.add(pagesField);
+            bookProd.add(addBook);
+            bookProd.setVisible(true);
+        }
+
+        void FilmProd() {
+            filmProd = new JFrame();
+            filmProd.setSize(500, 500);
+            filmProd.setTitle(title);
+            filmProd.setLocationRelativeTo(null);
+            JLabel genre = new JLabel("Please enter the genre!");
+            JLabel playTime = new JLabel("Please enter the play time!");
+            genreField = new JTextField();
+            playTimeField = new JTextField();
+            addFilm = new JButton("Add film!");
+
+            addFilm.addActionListener(new Next_Click());
+            genreField.setColumns(7);
+            playTimeField.setColumns(7);
+
+            genre.setBounds(150, 125, 200, 30);
+            genreField.setBounds(150, 175, 200, 20);
+            playTime.setBounds(150, 250, 200, 30);
+            playTimeField.setBounds(150, 300, 200, 20);
+            addFilm.setBounds(175, 400, 150, 30);
+            filmProd.setLayout(null);
+
+            filmProd.add(genre);
+            filmProd.add(genreField);
+            filmProd.add(playTime);
+            filmProd.add(playTimeField);
+            filmProd.add(addFilm);
+            filmProd.setVisible(true);
         }
     }
 }
